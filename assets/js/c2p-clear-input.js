@@ -1,0 +1,1 @@
+jQuery(function(){$('input[type="text"]').each(function(){$(this).attr("title",$(this).val()).focus(function(){if($(this).val()==$(this).attr("title")){$(this).val("")}}).blur(function(){if($(this).val()==""||$(this).val()==" "){$(this).val($(this).attr("title"))}})})})

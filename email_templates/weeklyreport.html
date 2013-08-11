@@ -1,0 +1,324 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>Click2Promote | SEO Tool Extraordinaire</title>
+        <style type="text/css">
+            html, body, div, span, applet, object, iframe,
+            h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+            a, abbr, acronym, address, big, cite, code,
+            del, dfn, em, img, ins, kbd, q, s, samp,
+            small, strike, strong, sub, sup, tt, var,
+            b, u, i, center,
+            dl, dt, dd, ol, ul, li,
+            fieldset, form, label, legend,
+            table, caption, tbody, tfoot, thead, tr, th, td,
+            div.article, aside, canvas, details, embed, 
+            figure, figcaption, div.footer, div.header, hgroup, 
+            menu, nav, output, ruby, div.section, summary,
+            time, mark, audio, video {
+                margin: 0;
+                padding: 0;
+                border: 0;
+                font-size: 100%;
+                font: inherit;
+                vertical-align: baseline;
+                text-decoration: none;
+
+            }
+            div.article, aside, details, figcaption, figure, 
+            div.footer, div.header, hgroup, menu, nav, div.section {
+                display: block;
+            }
+            body {
+                line-height: 1;
+                background: #F5F5F5;
+            }
+            ol, ul {
+                list-style: none;
+            }
+            blockquote, q {
+                quotes: none;
+            }
+            blockquote:before, blockquote:after,
+            q:before, q:after {
+                content: '';
+                content: none;
+            }
+            table {
+                border-collapse: collapse;
+                border-spacing: 0;
+            }
+
+            a { color: #FFF; }
+            p { font-family: 'Roboto', sans-serif; padding: 5px 0; font-size: 1em; line-height: 1.2em; color: #222;}
+
+            #c2p-about img { width: 100%; }
+
+            .clear { clear: both; }
+            .mt120 { margin-top: 120px; }
+            .mt20 { margin-top: 20px; }
+            .mt80 { margin-top: 80px; }
+            .mb20 { margin-bottom: 20px; }
+            .mb60 { margin-bottom: 60px; }
+            .rounded-bg {
+                border-radius: 7px;
+                background: #DDD;
+                padding: 10px;
+                margin: 10px 0;
+            }
+            .rounded-bg h2 { padding-top: 0; }
+
+            div.header {
+                position: fixed;
+                z-index: 1;
+                top: 0;
+                left: 0;	
+                width: 100%;
+                background: #15444e;
+                height: 65px;
+                box-shadow: 0px 0px 5px #666;
+            }
+
+            div.footer {
+                width: 100%;
+                background: #4682B4;
+                float: left;
+            }
+
+            div.footer p {
+                text-align: right;
+                font-size: 0.75em;
+                color: #FFF;
+            }
+            #c2p-logo {
+                float: left;
+                width: 199px;
+                height: 65px;
+                background: url(http://click2promote.me/assets/images/logo-click2promote.png);
+                cursor: pointer;
+                transition: background .1s ease-in;
+            }
+            #c2p-logo:hover {
+                background: url(http://click2promote.me/assets/images/logo-click2promote-hover.png);
+            }
+
+            #nav-slide {
+                display: none;
+                position: absolute;
+                left: 0;
+                top: 65px;
+                background: #CCC;
+                width: 100%;
+                height: 50px;
+                float: left;
+                box-shadow: 0px 2px 3px #666;
+            }
+
+            #nav-slide ul li {
+                padding: 0px 10px;
+                display: inline;
+                line-height: 50px;
+            }
+            #nav-slide ul li a {
+                font-size: 1em;
+                color: #FFF;
+                font-family: 'Sintony', sans-serif;
+                transition: color .3s ease-out;
+            }
+
+            .c2p-wrap { 
+                width: 60%; 
+                margin-left: auto; 
+                margin-right: auto;
+            }
+
+            @media only screen and (max-width:1440px){
+                .c2p-wrap { 
+                    width: 80%; 
+                }
+            }
+            @media only screen and (max-width:1280px){
+                .c2p-wrap { 
+                    width: 90%; 
+                }
+            }
+            @media only screen and (max-width:1024px){
+                .c2p-wrap { 
+                    width: 99%; 
+                }
+            }
+
+            h1, h2 {
+                padding: 20px 0;
+                font-family: 'Roboto', sans-serif;
+                font-weight: 100;
+                font-size: 3em;
+            }
+
+            h2 {
+                font-size: 2em;
+            }
+
+            #c2p-intro {
+                width: 100%;
+                margin-top: 65px;
+                height: 350px;
+                background-color: #4682B4; 
+                background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#3399cc), to(#4682B4));
+                background-image: -webkit-linear-gradient(top, #3399cc, #4682B4); 
+                background-image: -moz-linear-gradient(top, #3399cc, #4682B4);
+                background-image: -ms-linear-gradient(top, #3399cc, #4682B4);
+                background-image: -o-linear-gradient(top, #3399cc, #4682B4);
+                color: #FFF;
+                float: left;
+            }
+
+            #c2p-intro h1 {
+                text-align: center;
+                color: #FFF;
+            }
+
+            #c2p-about, #c2p-contact {
+                width: 100%;
+                float: left;
+                text-shadow: 1px 1px #FFF;
+            }
+
+            #c2p-contact {
+                box-shadow: 0px 0px 5px #999;
+            }
+
+            .gray {
+                background: #DDD;
+            }
+
+            .c2p-left {
+                float: left;
+                width: 49%;
+                margin-right: 5%;
+            }
+
+            .c2p-right {
+                float: left;
+                width: 45%;
+            }
+
+            #c2p-about h1 {
+                color: #15444e;
+            }
+
+            #c2p-about h2 {
+                color: #15444e;
+            }
+
+            #c2p-about li {
+                margin-left: 20px;
+                list-style-image:url(http://click2promote.me/assets/images/c2p-checkmark-12x12.png);
+            }
+
+            #c2p-about li p {
+                padding-top: 5px;
+            }
+
+            #social ul li {
+                display: inline;
+            }
+
+
+            @media only screen and (max-width:768px){
+                h1 { font-size: 2em; }
+                #nav-mobile { display: block; color: #FFF; margin-right: 10px; float: right; }
+                #nav, .mt120, .mt20, #c2p-about img { display: none; }
+                #c2p-intro { height: 220px; }
+                .c2p-left, .c2p-right { width: 100%; }
+                .c2p-analyze-icon {
+                    background: url(http://click2promote.me/assets/images/c2p-sprite-icons-mobile.png);
+                    background-position: 0 -200px;
+                    height: 100px;
+                    width: 100px;
+                    text-align: center;
+                    margin: 0 auto;
+                }
+                .c2p-promote-icon {
+                    background: url(http://click2promote.me/assets/images/c2p-sprite-icons-mobile.png);
+                    background-position: 0 -100px;
+                    height: 100px;
+                    width: 100px;
+                    text-align: center;
+                    margin: 0 auto;
+                }
+                .c2p-track-icon {
+                    background: url(http://click2promote.me/assets/images/c2p-sprite-icons-mobile.png);
+                    background-position: 0 0px;
+                    height: 100px;
+                    width: 100px;
+                    text-align: center;
+                    margin: 0 auto;
+                }
+                div.footer p {
+                    text-align: left;
+                    padding-left: 5px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header mb60">
+            <div class="article c2p-wrap">
+                <a href="#">
+                    <div id="c2p-logo" class="section"></div>
+                </a>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear mt80"></div>
+        <div id="c2p-about" class="article mt120 mb60">
+            <div class="section c2p-wrap mt120">
+                <div class="article">
+                    <div style="border: 0;margin-left: 10%;margin-right: auto;" class="section">
+                        <h1>Weekly report</h1>
+                        <ul>
+                            <li><p>Google search results: ?gog?</p></li>
+                            <li><p>Bing search results: ?bn?</p></li>
+                            <li><p>Youtube search results: ?you?</p></li>
+                            <li><p>Facebook search results: ?fb?</p></li>
+                            <li><p>Twitter search results: ?tw?</p></li>
+                            <li><p>Myspace search results: ?mysp?</p></li>
+                        </ul>
+                        <br /><br />
+                        <a href="http://click2promote.me/index.php/login/email?code=%code%&id=%user%&user=%user_id%" target="_blank" class="c2p-send">Login</a>
+
+                    </div>
+                </div>
+                <div class="article">
+
+                </div>
+                <div class="mb60"></div>
+                <div class="clear"></div>
+            </div>
+        </div>
+        <div class="clear mb60"></div>
+
+        <div id="c2p-contact" class="section gray">
+            <div class="article c2p-wrap gray">
+                <div class="section c2p-right">
+                    <h2>Get Social with us!</h2>
+                    <div id="social" class="section">
+                        <ul>
+                            <li><a href="https://www.facebook.com/Click2Promote.me" target="_blank"><img src="assets/images/c2p-icon-facebook.png" alt="Facebook" /></a></li>
+                            <li><a href="https://twitter.com/click2promote" target="_blank"><img src="assets/images/c2p-icon-twitter.png" alt="Twitter" /></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>  
+        </div>
+        <div class="footer">
+            <div class="article c2p-wrap">
+                <p>&copy; <a href="http://click2promote.me/" target="_blank">Click2Promote.me</a> | Site by <a target="_blank" href="http://www.pixelicious.nl">Pixelicious</a> | All rights reserved</p>
+            </div>
+        </div>
+    </body>
+</html>
