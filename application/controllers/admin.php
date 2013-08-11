@@ -279,62 +279,15 @@ class Admin extends C2P_Controller {
     }
 
     private function getBing($qry) {
-        $url = "http://www.bing.com/search?q=" . $qry;
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.7; rv:7.0.1) Gecko/20100101 Firefox/7.0.1');
-        $output = curl_exec($ch);
-        curl_close($ch);
-        $DOM = new DOMDocument();
-        if (!empty($output)) {
-            $pos = strpos($output, 'id="count"');
-            if ($pos) {
-                $mysp = strip_tags(substr($output, $pos, 300));
-                preg_match_all('/[0-9,]+/', $mysp, $matches);
-                $the_match = str_replace(',', '', $matches[0][0]);
-                return $the_match;
-            }
-            else {
-                return 0;
-            }
-        }
+       //	Bing code goes here
     }
 
     private function getGoogle($qry) {
-        $url = "http://www.google.com/search?q=" . $qry;
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.75 Safari/535.7');
-        $output = curl_exec($ch);
-        curl_close($ch);
-        if (!empty($output)) {
-            $pos = strpos($output, 'id=resultStats>');
-            $gog = strip_tags(substr($output, $pos + 17, 1000));
-            $gog = strtolower($gog);
-            preg_match_all('/[0-9,]+/', $gog, $matches);
-            $the_match = str_replace(',', '', $matches[0][0]);
-            return $the_match;
-        }
+        //	Google Code goes here
     }
 
     private function getYoutube($qry) {
-        $url = "http://www.youtube.com/results?search_query=" . $qry;
-        $ch = curl_init($url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_BINARYTRANSFER, true);
-        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 6.0) AppleWebKit/535.7 (KHTML, like Gecko) Chrome/16.0.912.75 Safari/535.7');
-        $output = curl_exec($ch);
-        curl_close($ch);
-        if (!empty($output)) {
-            $pos = strpos($output, 'class="num-results">');
-            $youtube = strip_tags(substr($output, $pos + 20, 1000));
-            $youtube = strtolower($youtube);
-            preg_match_all('/[0-9,]+/', $youtube, $matches);
-            $the_match = str_replace(',', '', $matches[0][0]);
-            return $the_match;
-        }
+        //	youtube code goes here
     }
 
     private function getStats($id, $link) {
