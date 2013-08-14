@@ -10,7 +10,7 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/js/jqplot/jquery.jqplot.min.css') ?>" />
 <script>
     $(document).ready(function() {
-        if ($(window).width() > 260) {
+        if (!is_mobile()) {
             $("#sortable").sortable();
             $("#sortable").disableSelection();
             $("[class$=-bar]").tooltip({position: {my: "left+15 center", at: "right center"}});
