@@ -76,8 +76,17 @@ class Home extends C2P_Controller {
             $this->load->model('UsersModel', 'userModel');
             //      get the site
             $site = $this->userModel->get_site_by_userid($this->user_id);
+            
+            $tmp = new stdClass();
             //  get the site stats, store in a temp. variable
+            if($this->input->get('from') && $this->input->get('to')){
+                $date_from = date('Y-m-d',  strtotime($this->input->get('from')));
+                $date_to = date('Y-m-d',  strtotime($this->input->get('to')));
+                $tmp = $this->userModel->get_site_stats_interval($site->index, $date_from, $date_to);
+            }
+            else{
             $tmp = $this->userModel->get_site_stats($site->index);
+            }
             $db_result = $tmp->result();
             $st = !empty($db_result) ? $db_result : null;
             //  used to display the url/keyword

@@ -277,6 +277,7 @@ function IsEmail(email) {
 }
 $(document).ready(function() {
     var chart = null;
+    var has_interval = '';
     var sess_id = 0;
     $('form').submit(function(e) {// ($(this).attr('id') != 'report_interval') && 
         if (($(this).attr('id') != 'back_form')
@@ -316,6 +317,7 @@ $(document).ready(function() {
         $('div [id^=chart] canvas').remove();
         $('div [id^=chart] div').remove();
         $('img.load').show();        
+        has_interval = '&from='+$('#date_from').val()+'&to='+$('#date_to').val();
         charts_interval();
     });
     
@@ -515,7 +517,7 @@ $(document).ready(function() {
         if ($(this).attr('id') == 'chart_holder') {
             return false;
         }
-        window.open(document.URL + '/reports?chart=' + $(this).attr('id'), 'name', 'height=600,width=800');
+        window.open(document.URL + '/reports?chart=' + $(this).attr('id')+has_interval, 'name', 'height=600,width=800');
     });
 
     //  TODO: search
