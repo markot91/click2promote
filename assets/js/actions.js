@@ -1,11 +1,121 @@
 /**
+ *
  *  user defined actions, mostly ajax
- */
+ *
+ **/
+
 function charts(reseta) {
     var stats = new Array;
     $.post($('#chart-url').val(), {
         'site_id': $('#site-id').val(),
         'session_id': $('#session-id').val()
+    },
+    function(data) {
+        chart = data;
+        stats = data;
+        //  if logged in from another place
+        if (data.site_details_changed == "validation_error") {
+            window.location = 'http://click2promote.me/index.php/login/logout#c2p-about';
+        }
+        var fb = new Array();
+        var tw = new Array();
+        var bn = new Array();
+        var gog = new Array();
+        var youtube = new Array();
+        var date = new Array();
+        var x_axis = new Array();
+
+        var count = 1;
+        if (chart) {
+            $.each(chart, function(key, value) {
+                x_axis.push(count);
+                fb.push([value.date.substr(0, 10), (value.fb / 10000000)]);
+                tw.push([value.date.substr(0, 10), (value.tw / 10000000)]);
+                gog.push([value.date.substr(0, 10), (value.gog / 10000000)]);
+                bn.push([value.date.substr(0, 10), (value.bn / 10000000)]);
+                youtube.push([value.date.substr(0, 10), (value.youtube)]);
+                date.push(value.date.substr(0, 10));
+                count++;
+            });
+        }
+
+        if (fb[0]) {
+            var chartfb = $.jqplot('chartfb', [fb], {
+                title: 'Facebook (x 10,000,000)',
+                axes: {
+                    xaxis: {
+                        renderer: $.jqplot.CategoryAxisRenderer
+                    }
+                }
+            });
+        }
+        else {
+            $('#chartfb').html('<div>No Facebook data</div>');
+        }
+        if (tw[0]) {
+            var charttw = $.jqplot('charttw', [tw], {
+                title: 'Twitter (x 10,000,000)',
+                axes: {
+                    xaxis: {
+                        renderer: $.jqplot.CategoryAxisRenderer
+                    }
+                }
+            });
+        }
+        else {
+            $('#charttw').html('<div>No Twitter data</div>');
+        }
+        if (bn[0]) {
+            var chartbing = $.jqplot('chartbing', [bn], {
+                title: 'Bing (x 10,000,000)',
+                axes: {
+                    xaxis: {
+                        renderer: $.jqplot.CategoryAxisRenderer
+                    }
+                }
+            });
+        }
+        else {
+            $('#chartbing').html('<div>No Bing data</div>');
+        }
+        if (gog[0]) {
+            var chartgoggle = $.jqplot('chartgoogle', [gog], {
+                title: 'Google (x 10,000,000)',
+                axes: {
+                    xaxis: {
+                        renderer: $.jqplot.CategoryAxisRenderer
+                    }
+                }
+            });
+        }
+        else {
+            $('#chartgoogle').html('<div>No Google data</div>');
+        }
+        if (youtube[0]) {
+            var chartyoutube = $.jqplot('chartyoutube', [youtube], {
+                title: 'Youtube (x 10,000,000)',
+                axes: {
+                    xaxis: {
+                        renderer: $.jqplot.CategoryAxisRenderer
+                    }
+                }
+            });
+        }
+        else {
+            $('#chartyoutube').html('<div>No Youtube data </div>');
+        }
+        $('.load').hide();
+        $('#chart_holder').css('padding-bottom', '160px');
+    }, 'json'
+            );
+}
+function charts_interval() {
+    var stats = new Array;
+    $.post($('#report_interval').attr('action'), {
+        'site_id': $('#report_interval [name=site_id]').val(),
+        'session_id': $('#report_interval [name=session_id]').val(),
+        'from': $('#report_interval #date_from').val(),
+        'to': $('#report_interval #date_to').val()
     },
     function(data) {
         chart = data;
@@ -118,15 +228,15 @@ function tables() {
         if (chart) {
             $.each(chart, function(key, value) {
                 x_axis.push(count);
-                $('#chartfb_table').html($('#chartfb_table').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.fb + '</td></tr>');
+                $('#chartfb_table tbody').html($('#chartfb_table tbody').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.fb + '</td></tr>');
                 $('#chartfb_table').css('margin-top', '30px');
-                $('#charttw_table').html($('#charttw_table').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.tw + '</td></tr>');
+                $('#charttw_table tbody').html($('#charttw_table tbody').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.tw + '</td></tr>');
                 $('#charttw_table').css('margin-top', '30px');
-                $('#chartgoogle_table').html($('#chartgoogle_table').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.gog + '</td></tr>');
+                $('#chartgoogle_table tbody').html($('#chartgoogle_table tbody').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.gog + '</td></tr>');
                 $('#chartgoogle_table').css('margin-top', '30px');
-                $('#chartbing_table').html($('#chartbing_table').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.bn + '</td></tr>');
+                $('#chartbing_table tbody').html($('#chartbing_table tbody').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.bn + '</td></tr>');
                 $('#chartbing_table').css('margin-top', '30px');
-                $('#chartyoutube_table').html($('#chartyoutube_table').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.youtube + '</td></tr>');
+                $('#chartyoutube_table tbody').html($('#chartyoutube_table tbody').html() + '<tr><td>' + value.date + '</td><td class="result">' + value.youtube + '</td></tr>');
                 $('#chartyoutube_table').css('margin-top', '30px');
                 $('tr').css('border-bottom', '2px solid #000');
                 count++;
@@ -141,7 +251,6 @@ function tables() {
     }, 'json'
             );
 }
-
 
 /**
  * Solution borrowed from :
@@ -168,11 +277,11 @@ function IsEmail(email) {
 }
 $(document).ready(function() {
     var chart = null;
+    var has_interval = '';
     var sess_id = 0;
-    $('form').submit(function(e) {
-        if (($(this).attr('id') != 'report_interval') && ($(this).attr('id') != 'back_form')
+    $('form').submit(function(e) {// ($(this).attr('id') != 'report_interval') && 
+        if (($(this).attr('id') != 'back_form')
                 && ($(this).attr('id') != 'search_form') && ($(this).attr('id') != 'clear_form')
-                && ($(this).attr('id') != 'paypal') && ($(this).attr('id') != 'payza')
                 && ($(this).attr('id') != 'mijnformuliertje')
                 && ($(this).attr('id') != 'reset_password')
                 && ($(this).attr('id') != 'email_form')
@@ -195,9 +304,23 @@ $(document).ready(function() {
         $('[class^=chart]').hide();
         $('#nav').hide();
         tables();
-        var table = getURLParameter('chart');
+        var table_name_url = getURLParameter('chart');
+        var array_table = table_name_url.split("_");
+        var table = array_table[0];
+        
         $('.' + table + '_table').show();
+        $('.' + table + '_table').tablesorter({ sortList: [[0,0], [1,0]] });
     }
+
+    // charts_interval()
+    $('#submit_report_interval').click(function(){
+        $('div [id^=chart] canvas').remove();
+        $('div [id^=chart] div').remove();
+        $('img.load').show();        
+        has_interval = '&from='+$('#date_from').val()+'&to='+$('#date_to').val();
+        charts_interval();
+    });
+    
     //  update site details
     $('#form_update_site').bind('click', function() {
         var url = $('#site_details').attr('action');
@@ -394,7 +517,7 @@ $(document).ready(function() {
         if ($(this).attr('id') == 'chart_holder') {
             return false;
         }
-        window.open(document.URL + '/reports?chart=' + $(this).attr('id'), 'name', 'height=600,width=800');
+        window.open(document.URL + '/reports?chart=' + $(this).attr('id')+has_interval, 'name', 'height=600,width=800');
     });
 
     //  TODO: search
@@ -411,23 +534,22 @@ $(document).ready(function() {
     });
 
     //  TODO: admin page, update site stats
-    $("a#get_stats_one_site").unbind('click').on("click", function(e) {
+    $("a#get_stats_one_site").unbind('click').on("click",function(e) {
         e.preventDefault();
-        console.log("clicked");
         var link = $(this).prev().children("[name=link]").val();
         var index = $(this).prev().children("[name=id]").val();
         var session = $("#session-id").html();
-        var user = $(this).prev().children("[name=user_id]").val();
+        var user =  $(this).prev().children("[name=user_id]").val();
         var admin_id = $("#user-id").html();
         var getStatsSingle = $("#get_stats_single").html();
         $.post(
                 getStatsSingle,
                 {
-                    "link": link,
-                    "index": index,
-                    "session": session,
+                    "link": link, 
+                    "index": index, 
+                    "session": session, 
                     "user_id": user,
-                    "admin_id": admin_id
+                    "admin_id":admin_id
                 },
         function(data) {
             if (data.status == "OK") {
@@ -455,8 +577,8 @@ $(document).ready(function() {
     //  on window resize,
     //  resize charts
     $(window).resize(function() {
-        $("li div[id^=chart]").html('');
-        charts(true);
+//        $("li div[id^=chart]").html('');
+//        charts(true);
     });
 });
 

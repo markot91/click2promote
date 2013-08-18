@@ -425,6 +425,19 @@ h3 {
     padding: 10px;
     border-radius: 7px;
 }
+
+#date_from, #date_to {
+    width: 15%;
+    clear: both;
+    background: #EEE;
+    color: #333;
+    border: 1px solid #FFF;
+    font-size: 1em;
+    margin-bottom: 5px;
+    padding: 10px;
+    border-radius: 7px;
+}
+
 #mijnnaam:hover, #mijnbericht:hover, #mijndigitalepost:hover {
     background: #DFDFDF;
 }
