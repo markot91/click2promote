@@ -10,9 +10,9 @@
 <link rel="stylesheet" type="text/css" href="<?= base_url('assets/js/jqplot/jquery.jqplot.min.css') ?>" />
 <script>
     $(document).ready(function() {
-        if (!is_mobile()) {
-            $("#sortable").sortable();
-            $("#sortable").disableSelection();
+        if (!is_mobile() ) {
+//            $("#sortable").sortable();
+//            $("#sortable").disableSelection();
             $("[class$=-bar]").tooltip({position: {my: "left+15 center", at: "right center"}});
             $(".ui-state-default div").tooltip({position: {my: "left+15 center", at: "right center"}});
         }
@@ -68,9 +68,9 @@
                 <h3>Choose a date interval:
                     <input type="hidden" name="site_id" value="<?= $site_id ?>"/>
                     <input type="hidden" name="session_id" value="<?= $session; ?>"/>
-                    from:<input type="text" name="from" id="date_from">
-                    to:<input type="text" name="to" id="date_to">
-                    <input type="submit" value="Get report" id="submit_report_interval">
+                    <input type="text" name="from" id="date_from">
+                    to <input type="text" name="to" id="date_to">
+                    <input type="submit" value="Get report" id="submit_report_interval" class="c2p-send submit-button">
                 </h3>
             </form>
         </span>
