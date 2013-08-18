@@ -24,11 +24,10 @@ class Home extends C2P_Controller {
     }
 
     public function index() {
-        $user_id = $this->user_id;
-        if ($user_id && (($this->user_perms > 0) && (($this->user_perms < 3)) )) {
-            //  get_site_by_userid
+        if ($this->user_id && (($this->user_perms > 0) && (($this->user_perms < 3)) )) {
+//                        get_site_by_userid
             $this->load->model('UsersModel', 'userModel');
-            //  get the site
+            //      get the site
             $site = $this->userModel->get_site_by_userid($this->user_id);
             $db_result = '';
             //  get the site stats, store in a temp. variable
@@ -51,7 +50,7 @@ class Home extends C2P_Controller {
             $this->data['user_web'] = $site->link;
             $this->data['site_id'] = $site->index;
             $this->data['session'] = $this->session->userdata('user_db_sess');
-            $this->data['user_name'] = $this->session->userdata('user_name');
+            $this->data['user_name'] = $this->session->userdata('username');
             $session_id_from_post = $this->input->post('session_id');
             $site_id_from_post = $this->input->post('site_id');
 
@@ -64,7 +63,7 @@ class Home extends C2P_Controller {
             $this->load->view('land', $this->data);
         }
         else if ($this->user_id && ($this->user_perms == 3)) {
-            redirect('users/admin');
+            redirect('admin');
         }
         else {
             redirect('login');
@@ -104,8 +103,8 @@ class Home extends C2P_Controller {
             $this->load->model('UsersModel', 'userModel');
             $db_session = $this->userModel->get_login_session($user);
 
-            $date_from = $this->input->post('from');
-            $date_to = $this->input->post('to');
+            $date_from = date('Y-m-d',  strtotime($this->input->post('from')));
+            $date_to = date('Y-m-d',  strtotime($this->input->post('to')));
             $site_id = $this->input->post('site_id');
             if (!empty($date_from) && !empty($date_to) && !empty($site_id)) {
                 $form_session = $this->input->post('session_id');

@@ -26,7 +26,7 @@
 <div id="c2p-dashboard-stats">
 
     <section class="c2p-wrap">
-        <h2><?= $user_name; ?></i>'s dashboard</h2>
+        <h2><?= $user_web; ?></i>'s dashboard</h2>
         <div id="text_para_chart">
             <section id="c2p-dashboard">
                 <br />
@@ -64,15 +64,15 @@
 <article id="c2p-set-date">
     <section class="c2p-wrap">
         <span id="choose_interval">
-<!--            <form id="report_interval" action="<? echo site_url('home/get_chart_interval'); ?>" method="post">
+            <form id="report_interval" action="<? echo site_url('home/get_chart_interval'); ?>" method="post">
                 <h3>Choose a date interval:
                     <input type="hidden" name="site_id" value="<?= $site_id ?>"/>
                     <input type="hidden" name="session_id" value="<?= $session; ?>"/>
                     from:<input type="text" name="from" id="date_from">
                     to:<input type="text" name="to" id="date_to">
-                    <input type="submit" value="Get report" onClick="$('#report_interval').submit();">
+                    <input type="submit" value="Get report" id="submit_report_interval">
                 </h3>
-            </form>-->
+            </form>
         </span>
     </section>
 </article>

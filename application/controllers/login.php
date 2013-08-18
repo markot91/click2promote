@@ -2,9 +2,6 @@
 
 class Login extends C2P_Controller {
 
-    public function __construct() {
-        parent::__construct();
-    }
 
     public function index() {
         $this->load->library('form_validation');
@@ -33,7 +30,7 @@ class Login extends C2P_Controller {
                         $sessionData = array(
                             'username' => $one_row->user_username,
                             'user_id' => $one_row->user_id,
-                            'user_client_id' => $one_row->user_client_id,
+                            'user_client_id' => "",
                             'user_name' => $one_row->user_name,
                             'user_enabled' => $one_row->user_enabled,
                             'user_department' => $one_row->user_department,
@@ -102,7 +99,7 @@ class Login extends C2P_Controller {
                 $sessionData = array(
                     'username' => $user_details->user_username,
                     'user_id' => $user_details->user_id,
-                    'user_client_id' => $user_details->user_client_id,
+                    'user_client_id' => "",
                     'user_name' => $user_details->user_name,
                     'user_enabled' => $user_details->user_enabled,
                     'user_department' => $user_details->user_department,
