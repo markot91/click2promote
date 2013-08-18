@@ -118,9 +118,6 @@ namespace Click2PromoteMe.ApiData
             {
                 if (e.Error == null)
                 {
-                    //Process the result... 
-                    //string data = e.Result;
-
                     List<string> errors =new List<string>();
                     List<ChartViewModel> chartData = JsonConvert.DeserializeObject<List<ChartViewModel>>(e.Result, 
                                                         new JsonSerializerSettings
@@ -157,9 +154,6 @@ namespace Click2PromoteMe.ApiData
             {
                 if (e.Error == null)
                 {
-                    //Process the result... 
-                    //string data = e.Result;
-
                     List<string> errors = new List<string>();
                     List<ChartViewModel> chartData = JsonConvert.DeserializeObject<List<ChartViewModel>>(e.Result,
                                                         new JsonSerializerSettings
