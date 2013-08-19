@@ -23,11 +23,6 @@ namespace Click2PromoteMe.Views
             DateTime startDate = (DateTime)dpStartDate.Value;
             DateTime endDate = (DateTime)dpEndDate.Value;
 
-            //var data = from d in App.BasicChartData
-            //           where d.date >= startDate && d.date <= endDate
-            //           select d;
-            //App.FilteredChartData = data.ToList();
-
             DataService dataService = new DataService();
             dataService.ChartDataIntervalLoaded += dataService_ChartDataIntervalLoaded;
             dataService.GetChartIntervalData(startDate, endDate);

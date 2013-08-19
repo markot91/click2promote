@@ -31,7 +31,7 @@
             <toolkit:DatePicker x:Name="dpEndDate" Margin="0,225,0,294"/>
             <TextBlock HorizontalAlignment="Left" Margin="8,61,0,0" TextWrapping="Wrap" Text="Start Date" VerticalAlignment="Top"/>
             <TextBlock HorizontalAlignment="Left" Margin="8,194,0,0" TextWrapping="Wrap" Text="End Date" VerticalAlignment="Top"/>
-            <Button x:Name="btnSubmit" Content="Show Statistics" HorizontalAlignment="Left" Margin="0,0,0,191" VerticalAlignment="Bottom" Width="266" />
+            <Button x:Name="btnSubmit" Content="Show Statistics" HorizontalAlignment="Center" Margin="0,0,0,191" VerticalAlignment="Bottom" Width="266" />
         </Grid>
     </Grid>
  
