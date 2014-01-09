@@ -1,0 +1,19 @@
+Database Changes:
+
+1.) Added a new table "countries".
+----------------------
+
+Application Changes:
+
+1.) Finalized 'createblog' functionality for normal user (createblog).
+2.) Implemented admin grid for viewing and modifying all blog posts (admin_list).
+3.) Added an admin 'Create New Entry' functionality for creating a new blog entry for logged admin user (newblog).
+4.) Added an admin 'Create new Entry for {User}' that allows the admin to create new blog entry for another user (newblog($id)).
+5.) Implemented editing of a blog entry (this can be access by both http://..../blog/edit/{id} and http://..../blog/edit/{url} (edit)
+6.) Implemented "Publish" & "Delete" options in the admin grid.
+7.) Implemented TinyMCE for the contents of the blogs.
+8.) Added functionality that protects against XSS (blog URL & blog Title).
+
+9.) Create a new Countries Model (countriesmodel.php).
+10.) Modified the 'edit_my_account' method of 'users' controller to insert countries from db.
+11.) Modified the 'myAccount' view for a dropdown list with countries.

@@ -30,9 +30,17 @@ class UsersModel extends CI_Model {
     }
 
     function get_user_by_id($user_id) {
+        /*
         $result = $this->db->query("SELECT * FROM `users` WHERE `users`.user_id = '" . $user_id . "';");
         $user = $result->result();
         return !empty($user[0]) ? $user[0] : null;
+         */
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('users.user_id', $user_id);
+        
+        $user = $this->db->get()->row();
+        return count($user)>0 ? $user : NULL;
     }
 
     function get_user_by_email($user_email) {
@@ -61,7 +69,6 @@ class UsersModel extends CI_Model {
 				user_password,
 				user_enabled,
 				user_permisions,
-				user_department,
 				user_country,
 				user_city,
 				user_state_prov,
@@ -75,8 +82,7 @@ class UsersModel extends CI_Model {
 				'" . md5($user_credentials['user_password']) . "',
 				'0',
 				'1',
-				'0',
-				'N/A',
+				'',
 				'N/A',
 				'N/A',
 				'N/A',
@@ -162,6 +168,34 @@ class UsersModel extends CI_Model {
 
     /*     * ********************* sites   ********************** */
 
+    function did_user_vote_for_site($user_id, $site_id) {
+        $result = $this->db->query("SELECT votes FROM `votes` WHERE `votes`.index='" . $site_id . "' AND `votes`.user_id='" . $user_id . "';");
+        $site = $result->result();
+        return $site[0];
+    }
+
+    function get_available_sites_to_vote($user_id) {
+        $result = $this->db->query("SELECT v.index FROM `votes` as v LEFT JOIN (SELECT * FROM `sites` ) as s  on v.index=s.index WHERE v.user_id<>'" . $user_id . "' ; ");
+        $sites = $result->result();
+        return $sites;
+    }
+
+    function vote_for_site($data) {
+        $this->db->query("INSERT INTO votes(user_ip,votes,user_agent,site_id,user_id)
+                              VALUES('" . $data['user_ip'] . "','" . $data['vote'] . "','" . $data['u_agent'] . "','" . $data['index'] . "' ,'" . $data['user_id'] . "'); ");
+        $this->db->query("UPDATE `sites` SET votes='" . $data['votes'] . "' WHERE `sites`.index='" . $data['index'] . "' ; ");
+    }
+
+    function user_voted_in_past24hrs($user_id) {
+        $today = date('Y-m-d');
+        $result = $this->db->query("SELECT * FROM `votes` WHERE `votes`.user_id = '" . $user_id . "' AND time_voted<'" . $today . "';");
+        $user_voted = $result->result();
+        return !empty($site[0]) ? $site[0] : false;
+    }
+
+
+    /*           sites   */
+
     function get_count_sites() {
         $qry = $this->db->query("SELECT COUNT(*) as count_sites  FROM `sites` WHERE `sites`.admin = 'true';");
         $site = $qry->row();
@@ -169,11 +203,11 @@ class UsersModel extends CI_Model {
     }
 
     function create_site($site) {
-        $url = strtolower(trim($site['site_url']));
+        $url = strtolower(rtrim($site['site_url']));
         $url = str_replace("http://", '', $url);
         $this->db->query("INSERT INTO
                                  sites(link, site, descr, email, uploaded, admin,user_id)
-                                 values('http://" . $url. "',
+                                 values('http://" . $url . "',
                                         '" . $site['site_name'] . "',
                                         '" . $site['site_desc'] . "',
                                         '" . $site['user_email'] . "',
@@ -294,6 +328,12 @@ class UsersModel extends CI_Model {
     }
 
     function search_database($query) {
+        /*
+         * SELECT `sites`.index, `sites`.descr, `sites`.link, `sites`.site, `sites`.keywords, `users`.user_name FROM `sites` , `users`
+          WHERE
+          (`sites`.site LIKE '%om%' OR `sites`.descr LIKE '%om%' OR `sites`.link LIKE '%om%' )
+          AND `sites`.user_id=`users`.user_id
+         */
         if ($query == '') {
             $result = $this->db->query("SELECT * FROM `sites` ORDER BY `sites`.index ASC LIMIT 20;");
             $total = $this->db->query("SELECT count(*) as total FROM `sites` ;");
@@ -342,7 +382,7 @@ class UsersModel extends CI_Model {
     }
     /*     * ********************* sites   ********************** */
 
-    
+
 
     /*     * ********************* session   ********************** */
     function start_login_session($user_id) {
@@ -360,7 +400,7 @@ class UsersModel extends CI_Model {
                                 WHERE `session`.user_id= '" . $user_id . "' 
                                 AND code>0 ORDER BY id DESC;");
         return $row->row();
-    }
+}
 
     function end_login_session($user_id) {
         $this->db->query("UPDATE `session` 

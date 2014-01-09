@@ -9,6 +9,7 @@ class Users extends C2P_Controller {
             $this->load->model('UsersModel', 'user');
             $user_data = $this->user->get_all_users();
             foreach ($user_data->result() as $user) {
+                $this->data['all_users'][$user->user_id]['payment'] = '';//$this->user->get_user_payment($user->user_id);
                 $this->data['all_users'][$user->user_id]['id'] = $user->user_id;
                 $this->data['all_users'][$user->user_id]['user_name'] = $user->user_username;
                 $this->data['all_users'][$user->user_id]['name'] = $user->user_name;
@@ -18,7 +19,7 @@ class Users extends C2P_Controller {
                 $this->data['all_users'][$user->user_id]['user_permisions'] = $user->user_permisions;
             }
             $this->data['session'] = $this->session->userdata('user_db_sess');
-            $this->load->view('users', $this->data);
+            $this->load->view('admin/users', $this->data);
         }
         else {
             redirect('login');
@@ -34,7 +35,7 @@ class Users extends C2P_Controller {
                     $this->user->delete_user($user_id);
                     $this->data['user_del']['user_id'] = $user_id;
                     $this->data['user_del']['name'] = urldecode($this->input->get('name'));
-                    $this->load->view('deleteUser', $this->data);
+                    $this->load->view('admin/deleteUser', $this->data);
                 }
             }
             else {
@@ -53,6 +54,12 @@ class Users extends C2P_Controller {
             $this->load->model('UsersModel', 'user');
             $this->load->library('form_validation');
             $this->load->helper('form');
+            
+           // load Countries
+            $this->load->model('CountriesModel', 'countries');
+            $countryList = $this->countries->getAllByCountrySort();
+            $this->data['countryList'] = $countryList->result();
+            // end of load Countries
 
             $this->form_validation->set_error_delimiters('<div id="error_msg_newUser">', '</div>');
 //      if there's a post
@@ -108,7 +115,7 @@ class Users extends C2P_Controller {
                 $this->data['site_email'] = !empty($site->email) ? $site->email : '';
                 $this->data['site_id'] = !empty($site->index) ? $site->index : '';
 
-                $this->load->view('myAccount', $this->data);
+                $this->load->view('user/myAccount', $this->data);
             }
             else {
                 redirect('home');
@@ -127,6 +134,12 @@ class Users extends C2P_Controller {
             $this->load->model('UsersModel', 'user');
             $this->load->library('form_validation');
             $this->load->helper('form');
+            
+            // load Countries
+            $this->load->model('CountriesModel', 'countries');
+            $countryList = $this->countries->getAllByCountrySort();
+            $this->data['countryList'] = $countryList->result();
+            // end of load Countries
 
             $this->form_validation->set_error_delimiters('<div id="error_msg_newUser">', '</div>');
 //      if there's a post
@@ -183,7 +196,7 @@ class Users extends C2P_Controller {
             $this->data['site_email'] = !empty($site->email) ? $site->email : '';
             $this->data['site_id'] = !empty($site->index) ? $site->index : '';
             $this->data['user_id'] = $this->user_id;
-            $this->load->view('myAccount', $this->data);
+            $this->load->view('user/myAccount', $this->data);
         }
         else {
             redirect('login');
@@ -192,7 +205,7 @@ class Users extends C2P_Controller {
     //  loads user profile
     //  TODO : make view nice
     public function user_account() {
-        if ($this->user_id && ($this->user_perms == USER_LEVEL_USER)) {
+        if ($this->user_id && ($this->user_perms >= USER_LEVEL_USER)) {
             $this->load->model('UsersModel', 'user');
             $user_id = $this->input->get('id');
             $site_id = $this->input->get('site_id');
@@ -217,13 +230,13 @@ class Users extends C2P_Controller {
                 $this->data['city'] = $user->user_city;
                 $this->data['country'] = $user->user_country;
             }
-            $this->load->view('user_profile', $this->data);
+            $this->load->view('user/user_profile', $this->data);
         }
         else {
             redirect('login');
         }
     }
-    //  admin send custom message to user
+//  admin send custom message to user
     public function send_mail_to_user() {
         $this->data['user'] = array();
         if ($this->user_id && ($this->user_perms > 1)) {
@@ -244,6 +257,7 @@ class Users extends C2P_Controller {
             }
             else if (!empty($id_from_request)) {
                 $user = $this->user->get_user_by_id_only($id_from_request);
+                $this->data['payment'] = '';//$this->user->get_user_payment($user->user_id);
                 $this->data['id'] = $user->user_id;
                 $this->data['user_name'] = $user->user_username;
                 $this->data['name'] = $user->user_name;
@@ -252,7 +266,7 @@ class Users extends C2P_Controller {
                 $this->data['user_enabled'] = $user->user_enabled;
                 $this->data['user_permisions'] = $user->user_permisions;
             }
-            $this->load->view('mail_user', $this->data);
+            $this->load->view('admin/mail_user', $this->data);
         }
         else {
             redirect('login');
@@ -287,7 +301,7 @@ class Users extends C2P_Controller {
                 $this->data['user_facebook'] = !empty($user_profile->user_facebook) ? $user_profile->user_facebook : "";
             }
         }
-        $this->load->view('profile', $this->data);
+        $this->load->view('user/profile', $this->data);
     }
     //  TODO : only works for admin now
     public function search() {
@@ -363,7 +377,7 @@ class Users extends C2P_Controller {
     //  allow the user to reset his password
     public function forgot_password() {
         $this->load->model('UsersModel', 'user');
-        $user_info = $this->data;
+        $user_info = array();
         $user_info['user_agent'] = $this->data['user_agent'];
         $get = $this->input->post();
         if (!empty($get['email_reset_pass'])) {
@@ -393,11 +407,11 @@ class Users extends C2P_Controller {
                 try {
                     $this->sendMailPHPmailer($user_info);
                     $user_info['invalidEmail'] = 2;
-                    $this->load->view('passwordResetted', $user_info);
+                    $this->load->view('user/passwordResetted', $user_info);
                 }
                 catch (Exception $e) {
                     $user_info['invalidEmail'] = 1;
-                    $this->load->view('resetPassword', $user_info);
+                    $this->load->view('user/resetPassword', $user_info);
                 }
             }
             else {
@@ -407,7 +421,6 @@ class Users extends C2P_Controller {
         else {
             $this->load->view('resetPassword', $user_info);
         }
-        error_log(var_export($this->data,true));        
     }
     //  signup
     //  TODO : Add message to config or DB
@@ -450,7 +463,7 @@ class Users extends C2P_Controller {
                     catch(Exception $e){
                         log_message('error', $e->getMessage());
                     }
-                    $this->load->view('signup_finish', $this->data);
+                    $this->load->view('signup/signup_finish', $this->data);
                     try {
                         $big_message = "<p>Click2Promote.Me will help you to track and plan your online marketing campaigns.</p>" .
                                 "<p>Your username is: <em style=\"font-weight: bold\">" . $user_info['user_email'] . "</em><br/>" .
@@ -472,7 +485,6 @@ class Users extends C2P_Controller {
                     catch (Exception $e) {
                         redirect('error');
                     }
-                    
                 }
                 catch (Exception $e) {
                     redirect('error');
@@ -480,7 +492,7 @@ class Users extends C2P_Controller {
             }
         }
         if ($done != TRUE) {
-            $this->load->view('signup', $this->data);
+            $this->load->view('signup/signup', $this->data);
         }
     }
     // the following public methods
@@ -539,6 +551,43 @@ class Users extends C2P_Controller {
             }
         }
     }
+
+    public function vote_for_site() {
+
+        $this->load->model('UsersModel', 'users');
+
+        if ($this->input->post('user_act') == "vote") {
+            $this->data['user_ip'] = $this->input->ip_address();
+            $this->data['u_agent'] = $this->agent->agent;
+            $site_voted = $this->input->post('site_voted');
+            $site_voter = $this->input->post('site_voter');
+
+            $db_session = $this->users->get_login_session($this->user_id);
+            $form_session = $this->input->post('session_id');
+
+            if (!empty($site_voted) && !empty($site_voter) && ($form_session == $db_session->code)) {
+                $this->data['votes'] = $this->users->get_one_site_votes($site_voted);
+                if (!empty($this->data['votes']->votes)) {
+                    $this->data['votes'] = $this->data['votes']->votes + 1;
+                }
+                else {
+                    $this->data['votes'] = 1;
+                }
+                $this->data['index'] = $site_voted;
+                $this->data['user_id'] = $this->user_id;
+                $this->data['user_points'] = $this->session->userdata('user_points');
+
+                $this->users->update_user_points($this->data['user_id'], $this->data['user_points']);
+                $this->users->vote_for_site($this->data);
+
+                echo '{"vote_success":"OK"}';
+            }
+            else {
+                echo '{"vote_failure":"not_all_parameters_where_supplied"}';
+            }
+        }
+    }
+
     //  allow the user to change the password
     public function change_password() {
         $this->load->model('UsersModel', 'user');
@@ -559,7 +608,29 @@ class Users extends C2P_Controller {
             echo '{"password_change":"no_data_rcvd"}';
         }
     }
-    //  admin enable/diable user
+
+    //  TODO: Profile page for SEO professionals
+    public function make_profile_public() {
+        $this->load->model('UsersModel', 'users');
+        $db_session = $this->users->get_login_session($this->user_id);
+        $session = $this->input->post("session");
+        $user_id = $this->input->post("user_id");
+        $is_public = $this->input->post("is_public");
+        if (($session == $db_session) && !empty($user_id)) {
+            try {
+                $this->users->user_profile_public($user_id, $is_public);
+                echo '{"site_details_changed":"OK"}';
+            }
+            catch (Exception $e) {
+                echo '{"site_details_changed":"no_such_user"}';
+            }
+        }
+        else {
+            echo '{"site_details_changed":"validation error"}';
+        }
+    }
+
+    //  admin enable/diable users
     public function enable_disable() {
         if ($this->user_id && ($this->user_perms == USER_LEVEL_ADMIN)) {
             $this->load->model('UsersModel', 'user');

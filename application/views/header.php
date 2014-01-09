@@ -2,30 +2,30 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
-        <link rel="icon" type="image/png" href="http://click2promote.me/assets/image/favicon.ico">
-        <title>Click2Promote | SEO Tool Extraordinaire</title>
-            
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/screen.css'); ?>"/>
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>"/>
-        <link href='http://fonts.googleapis.com/css?family=Quicksand|Sintony:400,700|Roboto:100,400,900' rel='stylesheet' type='text/css'/>
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/jquery-ui-1.10.3.custom.min.css') ?>" />
-        <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/msgBoxLight.css') ?>" />
+            <link rel="icon" type="image/png" href="http://click2promote.me/assets/image/favicon.ico" />
+            <title>Click2Promote | SEO Tool Extraordinaire</title>
 
-        <script type="text/javascript" src="<?= base_url('assets/js/jquery-2.0.1.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui-1.10.3.custom.min.js'); ?>"></script>
-        <script type="text/javascript" src="<?= base_url('assets/js/c2p-clear-input.js'); ?>"></script>
-        <script type="text/javascript" src="<?= base_url('assets/js/jquery.msgBox.js'); ?>"></script>
-        <script type="text/javascript" src="<?= base_url('assets/js/actions.js'); ?>"></script>
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $("#nav-slide").hide();
-                $(".show_hide").show();
+            <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/screen.css'); ?>"/>
+            <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/font-awesome.min.css'); ?>"/>
+            <link href='http://fonts.googleapis.com/css?family=Quicksand|Sintony:400,700|Roboto:100,400,900' rel='stylesheet' type='text/css'/>
+            <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/jquery-ui-1.10.3.custom.min.css') ?>" />
+            <link rel="stylesheet" type="text/css" href="<?= base_url('assets/css/msgBoxLight.css') ?>" />
 
-                $('.show_hide').click(function() {
-                    $("#nav-slide").slideToggle();
+            <script type="text/javascript" src="<?= base_url('assets/js/jquery-2.0.1.min.js'); ?>"></script>
+            <script type="text/javascript" src="<?= base_url('assets/js/jquery-ui-1.10.3.custom.min.js'); ?>"></script>
+            <script type="text/javascript" src="<?= base_url('assets/js/c2p-clear-input.js'); ?>"></script>
+            <script type="text/javascript" src="<?= base_url('assets/js/jquery.msgBox.js'); ?>"></script>
+            <script type="text/javascript" src="<?= base_url('assets/js/actions.js'); ?>"></script>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $("#nav-slide").hide();
+                    $(".show_hide").show();
+
+                    $('.show_hide').click(function() {
+                        $("#nav-slide").slideToggle();
+                    });
                 });
-            });
-        </script>
+            </script>
             <!-- social sharing-->
             <script type="text/javascript">var switchTo5x = false;</script>
             <script type="text/javascript" src="http://w.sharethis.com/button/buttons.js"></script>
@@ -51,6 +51,7 @@
                             <li><a href="#c2p-contact">Contact</a></li>
                             <li><a href="<?= site_url('users/edit_my_account'); ?>">Account</a></li>
                             <li><a href="<?= site_url('home/faq'); ?>">FAQ</a></li>
+                            <li><a href="<?= site_url('blog'); ?>">Blog</a></li>
                             <li><a href="<?= site_url('login/logout'); ?>">Logout</a></li>
                         <?php } ?>
                         <?php if (!$user_logedin) { ?>
@@ -59,6 +60,7 @@
                             <li><a href="#c2p-contact">Contact</a></li>
                             <li><a href="<?= site_url('login#c2p-about'); ?>">Login</a></li>
                             <li><a href="<?= site_url('home/faq'); ?>">FAQ</a></li>
+                            <li><a href="<?= site_url('blog'); ?>">Blog</a></li>
                             <li><a href="<?= site_url('users/signup'); ?>">Signup</a></li>
                         <?php } ?>
                     </ul>
@@ -72,12 +74,13 @@
                         <?php if ($user_logedin) { ?>
                             <li><a href="<?= site_url($home); ?>">Dashboard</a></li>
                             <?php if ($user_perms == 3) { ?>
-                            <li><a href="<?= site_url('home/search'); ?>">Search</a></li>
+                                <li><a href="<?= site_url('home/search'); ?>">Search</a></li>
                                 <li><a href="<?= site_url('users'); ?>">Users</a></li>
                             <?php } ?>
                             <li><a href="#c2p-contact">Contact</a></li>
                             <li><a href="<?= site_url('users/edit_my_account'); ?>">Account</a></li>
                             <li><a href="<?= site_url('home/faq'); ?>">FAQ</a></li>
+                            <li><a href="<?= site_url('blog'); ?>">Blog</a></li>
                             <li><a href="<?= site_url('login/logout'); ?>">Logout</a></li>
                         <?php } ?>
                         <?php if (!$user_logedin) { ?>
@@ -87,6 +90,7 @@
                             <li><a href="<?= site_url('login#c2p-about'); ?>">Login</a></li>
                             <li><a href="<?= site_url('users/signup'); ?>">Signup</a></li>
                             <li><a href="<?= site_url('home/faq'); ?>">FAQ</a></li>
+                            <li><a href="<?= site_url('blog'); ?>">Blog</a></li>
                         <?php } ?>
                     </ul>
                 </section>
@@ -94,6 +98,6 @@
                 <div class="clear"></div>
             </article>
         </header>
-	<div class="mb60"></div>
+        <div class="mb60"></div>
 
 

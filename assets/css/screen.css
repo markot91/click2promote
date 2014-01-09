@@ -117,7 +117,7 @@ nav a { text-decoration: none; list-style: none; }
 #nav-slide {
     position: absolute;
     left: 0;
-	top: 65px;
+    top: 65px;
     background: #CCC;
     width: 100%;
     float: left;
@@ -157,7 +157,7 @@ nav ul li a:hover {
 
 .c2p-wrap { 
     float: left;
-    width: 60%; 
+    width: 60.5%; 
     margin-left: 20%; 
     margin-right: 20%;
 }
@@ -414,7 +414,8 @@ h3 {
 #password, #password-again, #siteurl, #desc, 
 #sitename, #yourname, #youremail, 
 #c2p-myname, #c2p-myemail, #c2p-mymessage, 
-#email_reset_pass, #change_pass {
+#email_reset_pass, #change_pass, .form-text-field,
+.form-text-area {
     width: 80%;
     clear: both;
     background: #EEE;
@@ -591,7 +592,7 @@ h3 {
     h1 { font-size: 2em; }
 	h2 { font-size: 1.4em; }
     #nav-mobile { display: block; color: #FFF; margin-right: 10px; float: right; }
-	#nav-mobile a h1 { color: #FFF; }
+    #nav-mobile a h1 { color: #FFF; }
     #nav, .mt120, .mt20, #c2p-about img { display: none; }
     #c2p-intro { height: 220px; }
     #c2p-intro h1 { font-size: 1.6em; }

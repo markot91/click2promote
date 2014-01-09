@@ -1,0 +1,17 @@
+Database Changes
+------------------------------
+
+1.) Added `user_id` column and user_url_name column in `blog` table.
+2.) Made `url` column unique
+
+Application Changes
+------------------------------
+1.) Removed `user_department` column from the insert query of the create_user function in the blog model (user_department column did not exist in database).
+2.) Fixed the SQL in the blog model which shows the last five blog posts.
+3.) Created a new `view` action (method) in the blog controller which provides user friendly urls.
+	Ex: click2promote/index.php/blog/view/bojan_admin/
+	    click2promote/index.php/blog/view/bojan_admin/test-blog5
+4.) Created a new `createblog` method and a corresponding view which allows a user to create a new blog post (not implemented yet, a bug in the header needs to be fixed).
+
+-------
+Marko Todorovski
